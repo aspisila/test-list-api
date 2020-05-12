@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+    api:
+        build: .
+        volumes:
+            - ./:/app
+        ports:
+            - 3001:3001
+        env_file: 
+            - .env
+        depends_on: 
+            - database
+        links:
+            - database
+        command: npm start
+    database:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: postgres
+            POSTGRES_DB: ptech
+        ports:
+            - 5432:5432
+        volumes: 
+            - database-data:/var/lib/postgresql/data
+
+volumes:
+    database-data: {}
+        
